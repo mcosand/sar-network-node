@@ -1,0 +1,17 @@
+#!/bin/sh
+POWER_URL=`cat /config | grep power_url= | cut -d = -f 2`
+if test -z "$POWER_URL"
+then
+  echo "Content-type: application/json" > /tmp/inverter.status.tmp
+  echo >> /tmp/inverter.status.tmp
+  echo "{}" >> /tmp/inverter.status.tmp
+else
+  curl "$POWER_URL/Dev_status.cgi?Port=0" -i 2>/dev/null| tail -n +2 > /tmp/inverter.status.tmp
+fi
+
+MODEM_PWD=`cat /config | grep modem_pwd= | cut -d = -f 2`
+MODEM_URL=`cat /config | grep modem_url= | cut -d = -f 2`
+curl -k -c /modem-cookie "$MODEM_URL/login/" -d 'cprouterusername=admin' -d "cprouterpassword=$MODEM_PWD" >/dev/null 2>&1
+curl -k -b /modem-cookie "$MODEM_URL/api/tree?q=\$.status.wan.devices" -i 2>/dev/null| tail -n +2 > /tmp/modem.status.tmp
+mv /tmp/inverter.status.tmp /tmp/inverter.status
+mv /tmp/modem.status.tmp /tmp/modem.status

@@ -1,0 +1,14 @@
+#!/bin/sh
+if [ ${HTTPS:=off} = "on" ]
+then
+  TOKEN=`env | grep -E '^HTTP_AUTHORIZATION=Bearer [A-Za-z0-9\._\-]+$' | cut -b 27-`
+  echo "Token: $TOKEN"
+
+  PARSED=`curl -k "https://database.kcsara.org/auth/connect/accesstokenvalidation?token=$TOKEN&expectedScope=network-node" -o -`
+  
+  echo $PARSED
+  case $PARSED in
+    *'"client_id":"network.node"'*) ;;
+    *) echo "Status: 400 BAD_TOKEN"; echo; exit;;
+  esac
+fi

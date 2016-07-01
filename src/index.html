@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title></title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/leaflet.css">
+    <style>
+        pre:empty {
+            display:none;
+        }
+        .page-header { margin:10px 0; padding-bottom:0px; }
+        .js-loading-power, .js-loading-modem { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h3 id="name">KCSARA Network Node</h3>
+        </header>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Location<div class="pull-right"><img src="images/spin.gif" class="js-loading-modem" style="height:1.2em;"></div></div>
+                    <div class="panel-body">
+                        <div id="map" style="width:100%; height:300px"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Modem<div class="pull-right"><img src="images/spin.gif" class="js-loading-modem" style="height:1.2em;"></div></div>
+                    <div class="panel-body">
+                        <pre id="modemStats"></pre>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Electrical<div class="pull-right"><img src="images/spin.gif" class="js-loading-power" style="height:1.2em;"></div></div>
+                    <div class="panel-body">
+                        <pre id="battStats"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="rp" style="display:none"></iframe>
+
+    <script src="leaflet.js"></script>
+    <script src="oidc-client.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

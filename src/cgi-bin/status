@@ -1,0 +1,3 @@
+#!/bin/sh
+. $(dirname $(readlink -f "$0"))/verify-token
+cat /tmp/modem.status
